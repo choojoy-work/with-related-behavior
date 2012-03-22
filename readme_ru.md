@@ -235,37 +235,6 @@ $post->withRelated->save(true,array('author'));
 и сохранение происходит только в том случае, если все модели, подготовленные для записи,
 валидны. Это можно изменить выставив параметр `$runValidation` метода в `false`.
 
-Комплексная рекурсивная валидация
----------------------------------
-
-В отличие от штатного `CModel::validate()`, метод `WithRelatedBehavior::validate()`
-проводит комплексную валидацию модели и всех связанных моделей. Результат валидации
-возвращается в виде булева значения. В том случае, если хотя-бы одна из моделей,
-принимающих участие в валидации, невалидна, результат работы метода — `false`.
-Если же все модели валидны, результат работы — `true`. Возможно ограничение валидации
-по атрибутам моделей. Это показано в следующем примере:
-
-```php
-<?php
-$post=new Post;
-$post->title='Relational validation is not a dream anymore.';
-$post->content='Since WithRelatedBehavior released...';
-
-$comment1=new Comment;
-$comment1->content='Was it hard?';
-$comment2=new Comment;
-$comment2->content='Yes, but we made it.';
-
-$post->comments=array($comment1,$comment2);
-
-$result=$post->withRelated->validate(array(
-	'title',		// будет проверен только атрибут `title` модели Post
-	'comments'=>array(
-		'content',	// будет проверен только атрибут `content` модели Comment
-	),
-));
-```
-
 Продвинутое использование
 -------------------------
 

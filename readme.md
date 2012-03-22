@@ -235,36 +235,6 @@ start its own transaction. By default, same as `CActiveRecord::save()` does,
 models it's going to save are valid. You can disable validation by passing `false`
 to `$runValidation` parameter.
 
-Recursive composite validation
-------------------------------
-
-As opposed to standard `CModel::validate()` method, `WithRelatedBehavior::validate()`
-does composite model validation. That means it validates all related models as
-well. Validation result is returned as a boolean value. If any of the models is not valid
-than result will be `false`. If all models are valid than result will be `true`.
-Additionally you can limit validation to model attributes as follows:
-
-```php
-<?php
-$post=new Post;
-$post->title='Relational validation is not a dream anymore.';
-$post->content='Since WithRelatedBehavior released...';
-
-$comment1=new Comment;
-$comment1->content='Was it hard?';
-$comment2=new Comment;
-$comment2->content='Yes, but we made it.';
-
-$post->comments=array($comment1,$comment2);
-
-$result=$post->withRelated->validate(array(
-	'title',		// only `title` attribute of the Post model will be validated
-	'comments'=>array(
-		'content',	// only `content` attribute of the Comment model will be validated
-	),
-));
-```
-
 Advanced usage
 --------------
 
