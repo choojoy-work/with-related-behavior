@@ -29,7 +29,7 @@ class WithRelatedBehavior extends CActiveRecordBehavior
 
 		$db=$owner->getDbConnection();
 
-		if($db->getCurrentTransaction())
+		if($db->getCurrentTransaction()===null)
 			$transaction=$db->beginTransaction();
 
 		try
